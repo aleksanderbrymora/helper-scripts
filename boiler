@@ -1,0 +1,60 @@
+#!/bin/bash
+echo "Creating boilerplate"
+mkdir js css
+touch README.md
+
+read -p "Include jQuery [y/n]: " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	curl -s https://code.jquery.com/jquery-3.4.1.min.js > js/jquery.js;
+	read -p "Include water css [y/n]: " -n 1 -r
+	echo
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		cp ~/bin/resources/html/wj_ww.html index.html
+		cp ~/bin/resources/js/wj.js js/main.js
+		cp ~/bin/resources/css/style.css css/style.css
+	elif [[ $REPLY =~ ^[Nn]$ ]] 
+	then
+		cp ~/bin/resources/html/wj_ow.html index.html
+		cp ~/bin/resources/js/wj.js js/main.js
+		cp ~/bin/resources/css/style.css css/style.css
+	fi
+elif [[ $REPLY =~ ^[Nn]$ ]] 
+then
+	read -p "Include water css [y/n]: " -n 1 -r
+	echo
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		cp ~/bin/resources/html/oj_ww.html index.html
+		cp ~/bin/resources/js/oj.js js/main.js
+		cp ~/bin/resources/css/style.css css/style.css
+	elif [[ $REPLY =~ ^[Nn]$ ]] 
+	then
+		cp ~/bin/resources/html/oj_ow.html index.html
+		cp ~/bin/resources/js/oj.js js/main.js
+		cp ~/bin/resources/css/style.css css/style.css
+	fi
+fi
+
+read -p "Initiate git [y/n]: " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	git init
+	git add .
+	git commit -m "Initial commit"
+	read -p "Add to Github [y/n]: " -n 1 -r
+	echo
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		echo "Paste link to the repo on github"
+		read gitlink
+		git remote add origin $gitlink
+		git push -u origin master
+	fi
+fi
+
+code .
+live-server

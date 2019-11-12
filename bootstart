@@ -1,0 +1,33 @@
+#!/bin/bash
+
+mkdir js css
+touch README.md
+curl -s "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" > css/bootstrap.min.css
+curl -s "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" > js/bootstrap.min.js
+curl -s "https://code.jquery.com/jquery-3.4.1.min.js" > js/jquery.min.js
+curl -s "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" > js/popper.min.js
+
+cp ~/bin/resources/js/wj.js js/main.js
+cp ~/bin/resources/html/bootstrap.html index.html
+cp ~/bin/resources/css/style.css css/style.css
+
+read -p "Initiate git [y/n]: " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	git init
+	git add .
+	git commit -m "Initial commit"
+	read -p "Add to Github [y/n]: " -n 1 -r
+	echo
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		echo "Paste link to the repo on github"
+		read gitlink
+		git remote add origin $gitlink
+		git push -u origin master
+	fi
+fi
+
+code .
+live-server

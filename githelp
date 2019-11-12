@@ -1,0 +1,12 @@
+#!/bin/bash
+
+git add -A
+read -p "Commit message: " commitMessage
+git commit -m "$commitMessage"
+read -p "Upstream? [y/n]: " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	git pull upstream master
+fi
+git push -u origin master
