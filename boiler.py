@@ -51,6 +51,7 @@ else:
 	</body>
 </html>"""
         )
+        f.close()
     # Create main.js
     open(f'{path}/js/main.js', 'a').close()
     print('Done!\nRunning live server and opening in VS Code')
